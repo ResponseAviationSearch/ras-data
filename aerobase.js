@@ -48,6 +48,7 @@ async function abBoot(){
     setTimeout(()=>{
       document.getElementById('ab-loading').style.display='none';
       document.getElementById('ab-shell').style.display='flex';
+      ['fleet','bro'].forEach(id=>{const el=document.getElementById('ab-t-'+id);if(el)el.style.display='none';});
       Chart.defaults.color='rgba(236,233,226,0.45)';
       Chart.defaults.borderColor='rgba(200,164,92,0.1)';
       abInitDash(); abInitBro(); abDoSearch(); abInitApollo(); abBuildOwnerIdx();
@@ -142,11 +143,12 @@ function abAliasExpand(term){
   return[t,...new Set(extra)];
 }
 
+const AB_TABS=['dash','fleet','bro'];
 function abShowTab(n){
-  document.querySelectorAll('.ab-tc').forEach(t=>t.classList.remove('active'));
+  AB_TABS.forEach(id=>{const el=document.getElementById('ab-t-'+id);if(el)el.style.display='none';});
   document.querySelectorAll('.ab-nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('ab-t-'+n).classList.add('active');
-  document.getElementById('ab-n-'+n).classList.add('active');
+  const tab=document.getElementById('ab-t-'+n);if(tab)tab.style.display='flex';
+  const btn=document.getElementById('ab-n-'+n);if(btn)btn.classList.add('active');
 }
 function abInitDash(){
   document.getElementById('ab-s-tot').textContent=JETS.length.toLocaleString();
